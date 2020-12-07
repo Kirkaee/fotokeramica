@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Orders</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<div> Список заказов</div>
+{{#orders}}
+    <div>
+        <b>{{id}}</b>
+        <span>{{point}}</span>
+        <i>{{number}}</i>
+        <b>{{date}}</b>
+    </div>
+{{/orders}}
+
+
+<a href="/createOrder">new order</a>
+
+</body>
+</html>

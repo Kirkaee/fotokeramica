@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Create Point</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <form method="post">
+        <input type="text" name="PointName" placeholder="PointName"/>
+        <input type="text" name="firstName" placeholder="firstName"/>
+        <input type="text" name="lastName" placeholder="lastName"/>
+        <input type="text" name="address" placeholder="address"/>
+        <input type="text" name="phone" placeholder="phone"/>
+        <input type="text" name="typeOfTransfer" placeholder="typeOfTransfer"/>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+
+<div> Список точек</div>
+{{#points}}
+    <div>
+        <b>{{id}}</b>
+        <span>{{pointName}}</span>
+        <i>{{lastName}}</i>
+    </div>
+{{/points}}
+
+<a href="/points">Point</a>
+
+
+</body>
+</html>

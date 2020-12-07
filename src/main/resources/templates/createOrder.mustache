@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Create Order</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <form method="post">
+        <input type="text" name="pointName" placeholder="PointName"/>
+        <input type="text" name="number" placeholder="number"/>
+        <input type="text" name="carcass" placeholder="carcass"/>
+        <input type="text" name="lastName" placeholder="lastName"/>
+        <input type="text" name="holes" placeholder="holes"/>
+        <input type="text" name="size" placeholder="size"/>
+        <input type="text" name="price" placeholder="price"/>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+
+<div> Список заказов</div>
+{{#orders}}
+    <div>
+        <b>{{id}}</b>
+        <span>{{point}}</span>
+        <i>{{number}}</i>
+        <b>{{date}}</b>
+    </div>
+{{/orders}}
+
+<a href="/orders">Orders</a>
+
+
+</body>
+</html>
