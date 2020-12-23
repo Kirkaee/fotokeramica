@@ -1,5 +1,7 @@
 package com.fotokeramica.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -11,11 +13,14 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
     private Integer id;
+
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "point_id")
     private Point point;
+
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     @Column(name = "order_date")
-    private LocalDate date;
+    private LocalDate startDate;
     @Column(name = "order_number")
     private int number;
     @Column(name = "order_carcass")
@@ -28,6 +33,8 @@ public class Order {
     private String size;
     @Column(name = "order_price")
     private int price;
+    @Column(name= "point_name")
+    private String pointName;
 
     public Point getPoint() {
         return point;
@@ -38,11 +45,11 @@ public class Order {
     }
 
     public LocalDate getDate() {
-        return date;
+        return startDate;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.startDate = date;
     }
 
     public int getNumber() {
@@ -99,5 +106,13 @@ public class Order {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getPointName() {
+        return pointName;
+    }
+
+    public void setPointName(String pointName) {
+        this.pointName = pointName;
     }
 }

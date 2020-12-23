@@ -8,8 +8,10 @@ public class Point {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    //внести зависимость
     @Column(name = "point_id")
     private Integer id;
+
     @Column(name = "point_name")
     private String pointName;
     @Column(name = "first_name")
