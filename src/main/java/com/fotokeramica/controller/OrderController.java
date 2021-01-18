@@ -1,9 +1,7 @@
 package com.fotokeramica.controller;
 
-import com.fotokeramica.domain.Order;
-import com.fotokeramica.domain.Point;
-import com.fotokeramica.repositories.OrderRepositories;
-import com.fotokeramica.repositories.PointRepositories;
+import com.fotokeramica.service.OrderService;
+import com.fotokeramica.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -12,29 +10,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 public class OrderController {
 
     @Autowired
-    private OrderRepositories orderRepositories;
+    private OrderService orderService;
 
     @Autowired
-    private PointRepositories pointRepositories;
+    private PointService pointService;
 
     @GetMapping("/orders")
     public String order(Map<String, Object> model){
-        Iterable<Order> orders = orderRepositories.findAll();
-        model.put("orders", orders);
+        model.put("orders", orderService.allOrders());
         return "orders";
     }
 
     @GetMapping("/createOrder")
     public String createOrder(Map<String, Object> model){
-        Iterable<Order> orders = orderRepositories.findAll();
-        model.put("orders", orders);
+        model.put("orders", orderService.allOrders());
         return "createOrder";
     }
 
@@ -45,39 +40,14 @@ public class OrderController {
                       @RequestParam String holes, @RequestParam String size,
                       @RequestParam int price,
                       Map<String, Object> model){
-        Order order = new Order();
-
-        // point existence logic
-        List<Point> points = pointRepositories.findByPointName(pointName);
-        if (!points.isEmpty()) {
-            Point point = points.get(0);
-            order.setPoint(point);
-            order.setPointName(point.getPointName());
-        }
-        order.setDate(LocalDate.now());
-        order.setNumber(number);
-        order.setCarcass(carcass);
-        order.setLastName(lastName);
-        order.setHoles(holes);
-        order.setSize(size);
-        order.setPrice(price);
-        orderRepositories.save(order);
-
-        Iterable<Order> orders = orderRepositories.findAll();
-        model.put("orders", orders);
+        orderService.saveOrder(pointName, number, carcass, lastName, holes, size, price);
+        model.put("orders", orderService.allOrders());
         return "createOrder";
     }
 
     @PostMapping("filterOfPoint")
     public String filterOfPoint(@RequestParam String pointName, Map<String, Object> model){
-        Iterable<Order> orders;
-        if (pointName !=null && !pointName.isEmpty()){
-            orders = orderRepositories.findByPointName(pointName);
-        } else {
-            orders = orderRepositories.findAll();
-        }
-        model.put("orders", orders);
-
+        model.put("orders", orderService.findOfPointName(pointName));
         return "orders";
     }
 
@@ -88,10 +58,7 @@ public class OrderController {
                                @RequestParam(defaultValue = "2030-01-01") @DateTimeFormat(pattern="yyyy-MM-dd")
                                        LocalDate date2,
                                Map<String, Object> model){
-        Iterable<Order> orders;
-        orders = orderRepositories.findByStartDateBetween(date1, date2);
-        model.put("orders", orders);
-
+        model.put("orders", orderService.findOfDate(date1, date2));
         return "orders";
     }
 

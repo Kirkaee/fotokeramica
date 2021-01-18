@@ -1,7 +1,7 @@
 package com.fotokeramica.controller;
 
 import com.fotokeramica.domain.Point;
-import com.fotokeramica.repositories.PointRepositories;
+import com.fotokeramica.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +14,18 @@ import java.util.Map;
 public class PointController {
 
     @Autowired
-    private PointRepositories pointRepositories;
+    private PointService pointService;
 
     @GetMapping("/points")
     public String points(Map<String, Object> model) {
-        Iterable<Point> points = pointRepositories.findAll();
+        Iterable<Point> points = pointService.allPoints();
         model.put("points", points);
         return "points";
     }
 
     @GetMapping("/createPoint")
     public String createPoint(Map<String, Object> model){
-        Iterable<Point> points = pointRepositories.findAll();
+        Iterable<Point> points = pointService.allPoints();
         model.put("points", points);
         return "createPoint";
     }
@@ -36,16 +36,9 @@ public class PointController {
                       @RequestParam String lastName, @RequestParam String address,
                       @RequestParam String phone, @RequestParam String typeOfTransfer,
                       Map<String, Object> model){
-        Point point = new Point();
-        point.setPointName(pointName);
-        point.setFirstName(firstName);
-        point.setLastName(lastName);
-        point.setAddress(address);
-        point.setPhone(phone);
-        point.setTypeOfTransfer(typeOfTransfer);
-        pointRepositories.save(point);
+        pointService.savePoint(pointName, firstName, lastName, address, phone, typeOfTransfer);
 
-        Iterable<Point> points = pointRepositories.findAll();
+        Iterable<Point> points = pointService.allPoints();
         model.put("points", points);
         return "createPoint";
     }
