@@ -6,7 +6,15 @@
 </head>
 <body>
 <h1>IT`S FOTOKERAMICA GOMEL</h1>
-<div>Hello</div>
+<div>
+    {{#statistic}}
+        <div>
+            <b>Count point: {{countPoint}}</b>
+            <i>Count order: {{countOrder}}</i>
+            <span>Money: {{money}}</span>
+        </div>
+    {{/statistic}}
+</div>
 <a href="/points"><h3>Point</h3></a>
 <a href="/orders"><h3>Order</h3></a>
 
