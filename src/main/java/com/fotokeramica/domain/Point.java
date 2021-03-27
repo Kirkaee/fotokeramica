@@ -29,5 +29,4 @@ public class Point {
     private String phone;
     @Column(name = "point_type_of_transfer")
     private String typeOfTransfer;
-
 }
